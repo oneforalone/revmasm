@@ -1,5 +1,5 @@
 #[cfg(test)]
-mod tests {
+mod opcodes_tests {
     use revmasm::opcodes::OPCODE;
 
     #[test]

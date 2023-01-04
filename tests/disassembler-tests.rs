@@ -1,5 +1,5 @@
 #[cfg(test)]
-mod tests {
+mod disassembler_tests {
     use revmasm::disassembler::disassemble;
 
     #[test]
