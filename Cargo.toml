@@ -6,9 +6,7 @@ rust-version = "1.66"
 authors = ["Yuqi Liu <yuqi.lyle@outlook.com"]
 license = "MIT"
 readme = "README.md"
-documentation = "https://docs.rs/revmasm"
 repository = "https://github.com/oneforalone/revmasm"
-homepage = "https://docs.rs/revmasm"
 description = "A EVM Assembler in Rust."
 
 [dependencies]
