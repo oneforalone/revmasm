@@ -1165,8 +1165,29 @@ impl TryFrom<u8> for OPCODE {
                 stack_reads: 1,
                 stack_writes: 0,
             }),
-            _ => Err("Unknown OPCODE"),
+            _ => Err("TryFrom<u8> UNKNOWN OPCODE"),
         }
+    }
+}
+
+impl TryFrom<&str> for OPCODE {
+    type Error = &'static str;
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        let mut index = 0;
+        while index < 255 {
+            let op = match OPCODE::try_from(index) {
+                Ok(op) => op,
+                Err(_) => {
+                    index = index + 1;
+                    continue;
+                }
+            };
+            if op.name == value.to_string() {
+                return Ok(op);
+            }
+            index = index + 1;
+        }
+        Err("TryFrom<&str> UNKONW OP NAME")
     }
 }
 
@@ -1329,8 +1350,26 @@ mod tests {
     use crate::opcodes::OPCODE;
 
     #[test]
-    fn selfdestruct() {
-        let op = OPCODE::try_from(0xff).unwrap();
-        assert_eq!(op.name, "SELFDESTRUCT");
+    fn test_try_from_u8() -> Result<(), String> {
+        for i in 0..=0xff {
+            match OPCODE::try_from(i) {
+                Ok(_) => return Ok(()),
+                Err(err) => return Err(String::from(err)),
+            }
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn test_try_from_str() -> Result<(), String> {
+        let op_names = ["STOP", "PUSH", "PUSH1", "STORE", "END"];
+        for name in op_names {
+            match OPCODE::try_from(name) {
+                Ok(_) => return Ok(()),
+                Err(err) => return Err(String::from(err)),
+            }
+        }
+
+        Ok(())
     }
 }
