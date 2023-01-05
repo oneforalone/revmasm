@@ -6,7 +6,7 @@ EVM Assembler/Disassembler in rust
 
 ```toml
 [dependencies]
-revmasm = "0.1.1"
+revmasm = "0.1.2"
 ```
 
 ## Usage
