@@ -1,16 +1,37 @@
-use crate::opcodes::{OPCODE, OPCODE_MAP};
+use crate::{
+    opcodes::{OPCODE, OPCODE_MAP},
+    types::bytecodes::Bytecodes,
+};
 
-pub fn disassemble(bytecodes: Vec<u8>, kind: &str) {
-    println!("Rust EVM Disassembler: {} version", kind);
-    println!("Bytecodes: {}", hex::encode(bytecodes.clone()));
+/// Disassemble the bytecodes
+///
+/// # Example
+///
+/// ```
+/// use revmasm::{
+///     disassembler::disassemble,
+///     types::bytecodes::Bytecodes
+/// };
+///
+/// let bc = Bytecodes::from("".to_string());
+/// disassemble(bc);
+/// ```
+pub fn disassemble(bc: Bytecodes) {
+    println!("Rust EVM Disassembler.");
+    println!("Bytecodes: {}", bc);
+    let kind = match bc.0.len() {
+        0..=100 => "struct",
+        _ => "hashmap",
+    };
+
     let mut pc = 0;
-    while pc < bytecodes.len() {
-        let opcode = match bytecodes.get(pc) {
+    while pc < bc.0.len() {
+        let opcode = match bc.0.get(pc) {
             Some(opcode) => *opcode,
             None => 0,
         };
         let op_name: String = match kind {
-            "default" | "struct" => {
+            "struct" => {
                 let op = match OPCODE::try_from(opcode) {
                     Ok(op) => op,
                     Err(_) => {
@@ -44,7 +65,7 @@ pub fn disassemble(bytecodes: Vec<u8>, kind: &str) {
                 "{:08x}: {} 0x{}",
                 pc,
                 op_name,
-                hex::encode(bytecodes.get(start..end).unwrap())
+                hex::encode(bc.0.get(start..end).unwrap())
             );
 
             pc = pc + usize::from(delta);
