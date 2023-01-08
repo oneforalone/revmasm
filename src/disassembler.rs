@@ -13,7 +13,7 @@ use crate::{
 ///     types::bytecodes::Bytecodes
 /// };
 ///
-/// let bc = Bytecodes::from("".to_string());
+/// let bc = Bytecodes::from("61F1F1610203".to_string());
 /// disassemble(bc);
 /// ```
 pub fn disassemble(bc: Bytecodes) {

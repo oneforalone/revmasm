@@ -54,6 +54,8 @@ pub fn assemble_one(instr: String) -> Result<Bytecodes, Error> {
 /// assert_eq!(bytecodes_to_hex(&bc), "608060405260043610603f57600035".to_string());
 /// ```
 pub fn assemble(instrs: String) -> Result<Bytecodes, Error> {
+    println!("Rust EVM Assembler.");
+    println!("OPCODEs: \n{}", instrs);
     let mut buf = BytesMut::new();
     for instr in instrs.lines() {
         let bc = assemble_one(instr.to_string()).unwrap();
