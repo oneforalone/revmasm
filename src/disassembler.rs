@@ -9,6 +9,19 @@ pub struct Instruction {
     pub data: Option<String>,
 }
 
+/// Disassemble the bytecodes
+///
+/// # Example
+///
+/// ```
+/// use revmasm::{
+///     disassembler::disassemble,
+///     types::bytecodes::Bytecodes
+/// };
+///
+/// let bc = Bytecodes::from("61F1F1610203".to_string());
+/// disassemble(bc);
+/// ```
 pub fn disassemble(bc: Bytecodes) -> Vec<Instruction> {
     let kind = determine_kind(&bc);
     let mut pc = 0;
